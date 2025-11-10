@@ -152,3 +152,126 @@ Exemplos de erros:
 12524  relacao dos processos relativos a atos de conc...  academic     private
 11703  a fim de anexar em solicitacao protocolada na ...   private    academic
 5768   tenho anos sou dependente do plano de saude cu...  academic     private
+
+========== ANÁLISE E INTERPRETAÇÃO DO MODELO ==========
+
+--- Interpretação Global: características mais importantes por classe ---
+        target                     feature    weight
+0     academic                   professor  5.671710
+1     academic                    pesquisa  4.618538
+2     academic                    obrigada  4.219951
+3     academic                       dados  4.135452
+4     academic                   estudante  4.053892
+5     academic               sou estudante  3.597914
+6     academic                       entre  3.503470
+7     academic              aproveitamento  3.128446
+8     academic                   academico  3.067534
+9     academic                     ouvidor  3.018120
+10    academic                 pesquisador  3.016051
+11    academic              para professor  2.917017
+12    academic  solicito copia do processo  2.843090
+13    academic                         nis  2.801711
+14    academic                     empresa -2.791648
+15    academic                    obrigado -2.817711
+16    academic           solicito informar -2.871706
+17    academic                       copia -2.991871
+18    academic                    conforme -3.430261
+19    academic                    informar -3.445825
+20  government              redistribuicao  6.668530
+21  government                    servidor  5.327602
+22  government                  servidores  5.065198
+23  government                    solicito  4.476342
+24  government           solicito informar  3.716311
+25  government                    federais  3.669402
+26  government                    mestrado  3.398706
+27  government                    portaria  3.392511
+28  government                sou servidor  3.322566
+29  government                     de vaga  3.147885
+30  government                         sou  3.077230
+31  government                     federal  3.015599
+32  government                questionario  2.847316
+33  government                 de mestrado  2.834209
+34  government                       pasep  2.803362
+35  government               administrador  2.708502
+36  government                        ifpr  2.705227
+37  government                    poderiam -2.780076
+38  government                         ola -3.071696
+39  government                        dnpm -3.495907
+40     private                     empresa  4.159910
+41     private                    obrigado  3.158136
+42     private                        onde  3.121982
+43     private                      de uso  3.109401
+44     private                     produto  3.107073
+45     private                         oab  3.032798
+46     private                    servidor -3.041364
+47     private  solicito copia do processo -3.066804
+48     private                    solicito -3.076506
+49     private                    federais -3.087564
+50     private                    docentes -3.118091
+51     private                   academica -3.200314
+52     private                   municipal -3.423433
+53     private                universidade -3.631561
+54     private                  servidores -3.729686
+55     private                      campus -3.778409
+56     private                   professor -4.140968
+57     private                         sou -4.599474
+58     private              redistribuicao -4.796976
+59     private                    pesquisa -5.174412
+
+--- Interpretação Local (exemplo individual correto ou aleatório) ---
+Texto de exemplo: TRATA ESTE PEDIDO DE INFORMACOES SOBRE O PROJETO TERRITORIOS DO AXE (ANEXO), DE ESTUDO SOBRE AS RELIGIOES DE MATRIZ AFRICANA BEM COMO MAPEAMENTO DAS CASAS QUE AS PRATICAM, POR TODA A REGIAO DA GRANDE FLORIANOPOLIS, CONFORME SITE   TENDO EM VISTA QUE AINDA NAO ESTAO NO PORTAL DA FAPEU OS RELATORIOS PARCIAIS DE EXECUCAO FINANCEIRA E EXECUCAO TECNICA DO PRIMEIRO SEMESTRE DE  , CONFORME (  GOSTARIA QUE ME FOSSEM ENVIADAS COPIAS DIGITALIZADAS DA DOCUMENTACAO RELATIVA A:   - O PROCESSO QUE CONTEM O PR...
+Classe verdadeira: government | Classe predita: government
+
+Palavras com maior influência nesta predição:
+      target                feature    weight     value
+0   academic                projeto  0.160965  0.085399
+1   academic            territorios  0.129070  0.125586
+2   academic              regiao da  0.109005  0.074173
+3   academic               execucao  0.086177  0.115894
+4   academic             relatorios  0.081966  0.050690
+5   academic             mapeamento  0.075985  0.065599
+6   academic                    att  0.073309  0.037807
+7   academic          legislacao de  0.072212  0.077967
+8   academic               estao no  0.068042  0.072210
+9   academic                  ainda  0.060701  0.077880
+10  academic                  sobre  0.056432  0.040742
+11  academic               semestre  0.055487  0.053613
+12  academic            processo de  0.049500  0.041342
+13  academic                     me  0.048086  0.032157
+14  academic                 portal  0.047897  0.049796
+15  academic         este pedido de  0.047663  0.066938
+16  academic  pedido de informacoes  0.046140  0.075159
+17  academic                 matriz  0.046072  0.066379
+18  academic                  estao  0.045891  0.034612
+19  academic             documentos  0.045796  0.035605
+
+--- Análise de Erros ---
+Total de erros: 3883 de 13104 (29.63%)
+
+Exemplo de erro analisado:
+
+Texto incorreto (trecho): Ola, Gostaria de saber dados atualizados sobre o numero total de cargos vagos nos varios campus do IF Baiano para os cargos de Auxiliar em Administracao (nivel C) e Assistente em Administracao (nivel D), os campus que dispoem desses cargos, e se o referido IF dispoe de verba para nomeacao de novos servidores. Grato...
+Classe verdadeira: academic | Classe predita: government
+
+--- Palavras com maior influência nesta classificação incorreta ---
+      target                            feature    weight     value
+0   academic                              dados  0.157704  0.038135
+1   academic                                 if  0.131468  0.125922
+2   academic                 cargos de auxiliar  0.131249  0.116925
+3   academic                                ola  0.122112  0.053905
+4   academic              ola gostaria de saber  0.112089  0.077669
+5   academic                             campus  0.103161  0.090341
+6   academic  assistente em administracao nivel  0.099766  0.097730
+7   academic                    de cargos vagos  0.092729  0.069902
+8   academic                              verba  0.090405  0.092283
+9   academic                           total de  0.083053  0.064433
+10  academic       de auxiliar em administracao  0.079178  0.096074
+11  academic                  atualizados sobre  0.072751  0.116925
+12  academic                          os campus  0.069240  0.086462
+13  academic                            dispoem  0.067251  0.111672
+14  academic                                 os  0.065235  0.046617
+15  academic                   para nomeacao de  0.064481  0.106134
+16  academic                        auxiliar em  0.061820  0.090313
+17  academic                     de auxiliar em  0.060203  0.095566
+18  academic                       ola gostaria  0.057515  0.069200
+19  academic                       cargos vagos  0.055067  0.063005

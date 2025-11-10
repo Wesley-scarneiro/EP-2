@@ -10,13 +10,10 @@ from sklearn.dummy import DummyClassifier
 
 # --- Função de limpeza de texto ---
 def clean_text(text: str) -> str:
-    text = text.lower()
     text = unicodedata.normalize('NFKD', text)
     text = ''.join(c for c in text if not unicodedata.combining(c))
     text = re.sub(r'http\S+|www\S+', ' ', text)  # remove URLs
     text = re.sub(r'\d+', ' ', text)  # remove números
-    text = re.sub(r"[;:,.!?()\[\]\"'—–\-_/\\]", " ", text)  # remove pontuação
-    text = re.sub(r'\s+', ' ', text).strip()  # remove espaços extras
     return text
 
 # --- Carrega CSV e limpa texto ---
@@ -83,20 +80,19 @@ def logistic_regression_train(df: pd.DataFrame):
     # Retorna tudo necessário para análise posterior
     return model, vectorizer, X_test_text, y_test, y_pred
 
-# --- Interpretação e Análise de Erros ---
 def analyze_model(model, vectorizer, X_test_text, y_test, y_pred):
     print("\n========== ANÁLISE E INTERPRETAÇÃO DO MODELO ==========\n")
 
     # --- (i) Interpretação Global ---
     print("--- Interpretação Global: características mais importantes por classe ---")
     weights_df = eli5.explain_weights_df(model, vec=vectorizer, top=20)
-    print(weights_df.groupby('target').head(5))  # mostra top 5 termos mais relevantes por classe
+    print(weights_df.groupby('target').head(10))  # mostra top 5 termos mais relevantes por classe
 
-    # --- (ii) Interpretação Local ---
-    print("\n--- Interpretação Local (exemplo individual) ---")
+    # --- (ii) Interpretação Local (exemplo individual qualquer) ---
+    print("\n--- Interpretação Local (exemplo individual correto ou aleatório) ---")
     example_idx = 5  # índice de exemplo (pode mudar conforme desejar)
     explanation = eli5.explain_prediction_df(model, X_test_text[example_idx], vec=vectorizer)
-    print(f"Texto de exemplo: {X_test_text[example_idx]}")
+    print(f"Texto de exemplo: {X_test_text[example_idx][:500]}...")
     print(f"Classe verdadeira: {y_test[example_idx]} | Classe predita: {y_pred[example_idx]}")
     print("\nPalavras com maior influência nesta predição:")
     print(explanation.head(10))
@@ -111,8 +107,21 @@ def analyze_model(model, vectorizer, X_test_text, y_test, y_pred):
     erros = errors_df[errors_df['real'] != errors_df['predito']]
 
     print(f"Total de erros: {len(erros)} de {len(errors_df)} ({len(erros)/len(errors_df):.2%})\n")
-    print("Exemplos de erros:\n")
-    print(erros.sample(min(5, len(erros)), random_state=42))  # mostra até 5 exemplos aleatórios
+
+    if not erros.empty:
+        print("Exemplo de erro analisado:\n")
+        erro_exemplo = erros.sample(1, random_state=42).iloc[0]
+        idx_erro = errors_df.index[errors_df['texto'] == erro_exemplo['texto']][0]
+
+        print(f"Texto incorreto (trecho): {erro_exemplo['texto'][:500]}...")
+        print(f"Classe verdadeira: {erro_exemplo['real']} | Classe predita: {erro_exemplo['predito']}\n")
+
+        # Interpretação local para o erro
+        print("--- Palavras com maior influência nesta classificação incorreta ---")
+        erro_explanation = eli5.explain_prediction_df(model, erro_exemplo['texto'], vec=vectorizer)
+        print(erro_explanation.head(10))
+    else:
+        print("✅ Nenhum erro encontrado.")
 
 # --- Execução principal ---
 if __name__ == "__main__":
