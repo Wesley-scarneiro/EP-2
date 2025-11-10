@@ -3,8 +3,8 @@
 Os seguintes passos devem ser realizados para executar o EP corretamente:
 1. Criar um ambiente virtual python (python -m venv venv)
 2. Instalar as dependências via requirements.txt (pip install -r requirements.txt)
-3. Executar o arquivo run_gridSearch.py.py’ para pesquisa dos melhores parâmetros
-4. Executar o arquivo train_model.py.py’ com os parâmetros ótimos encontratos
+3. Executar o arquivo run_gridSearch.py’ para pesquisa dos melhores parâmetros
+4. Executar o arquivo train_model.py’ com os parâmetros ótimos encontratos
 
 ## Melhor combinação de parâmetros:
 ```json
