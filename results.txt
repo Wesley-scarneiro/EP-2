@@ -1,0 +1,154 @@
+ Melhor combinação de parâmetros:
+{'clf__C': np.float64(8.600385777897992), 'clf__class_weight': 'balanced', 'tfidf__max_df': np.float64(0.8348352022414609), 'tfidf__min_df': 2, 'tfidf__ngram_range': (1, 4), 'tfidf__sublinear_tf': True}
+
+🔹 Melhor acurácia obtida (validação cruzada): 0.6998
+
+🎯 Acurácia no conjunto de teste: 0.7015
+
+📊 Relatório de classificação:
+              precision    recall  f1-score   support
+
+    academic       0.71      0.69      0.70      4378
+  government       0.76      0.74      0.75      5635
+     private       0.60      0.64      0.62      3091
+
+    accuracy                           0.70     13104
+   macro avg       0.69      0.69      0.69     13104
+weighted avg       0.70      0.70      0.70     13104
+
+
+
+# Execução 1 - Sem remoção de palavras
+--- Baseline ---
+Acurácia: 0.43
+
+Acurácia (dados de teste - 30%): 0.7037
+
+Relatório por classe:
+              precision    recall  f1-score   support
+
+    academic     0.7116    0.6976    0.7045      4378
+  government     0.7620    0.7398    0.7508      5635
+     private     0.5980    0.6464    0.6213      3091
+
+    accuracy                         0.7037     13104
+   macro avg     0.6905    0.6946    0.6922     13104
+weighted avg     0.7065    0.7037    0.7048     13104
+
+
+========== ANÁLISE E INTERPRETAÇÃO DO MODELO ==========
+
+--- Interpretação Global: características mais importantes por classe ---
+        target            feature    weight
+0     academic          professor  5.779542
+1     academic           pesquisa  4.737362
+2     academic           obrigada  4.507279
+3     academic              dados  4.280683
+4     academic          estudante  4.050540
+20  government     redistribuicao  6.767933
+21  government           servidor  5.420249
+22  government         servidores  5.414577
+23  government           solicito  4.615862
+24  government  solicito informar  3.720078
+40     private            empresa  4.372895
+41     private           obrigado  3.371279
+42     private            produto  3.249317
+43     private               onde  3.202226
+44     private             de uso  3.142881
+
+--- Interpretação Local (exemplo individual) ---
+Texto de exemplo: trata este pedido de informacoes sobre o projeto territorios do axe anexo de estudo sobre as religioes de matriz africana bem como mapeamento das casas que as praticam por toda a regiao da grande florianopolis conforme site tendo em vista que ainda nao estao no portal da fapeu os relatorios parciais de execucao financeira e execucao tecnica do primeiro semestre de conforme gostaria que me fossem enviadas copias digitalizadas da documentacao relativa a o processo que contem o projeto original da ufsc chamado territorios do axe o processo de contratacao da fapeu pela ufsc para execucao desse projeto inclusive copias digitalizadas dos documentos de execucao notas fiscais faturas extratos etc que ainda estejam na fapeu e por algum motivo ainda nao tenham sido enviados a ufsc para publicacao em tempo real como determina a legislacao de transparencia aguardo resposta att
+Classe verdadeira: government | Classe predita: government
+
+Palavras com maior influência nesta predição:
+     target        feature    weight     value
+0  academic        projeto  0.187003  0.085399
+1  academic    territorios  0.136710  0.125586
+2  academic      regiao da  0.112323  0.074173
+3  academic       execucao  0.087324  0.115894
+4  academic     relatorios  0.075133  0.050690
+5  academic     mapeamento  0.074188  0.065599
+6  academic  legislacao de  0.072904  0.077967
+7  academic            att  0.069670  0.037807
+8  academic       estao no  0.068787  0.072211
+9  academic          ainda  0.061153  0.077880
+
+--- Análise de Erros ---
+Total de erros: 3883 de 13104 (29.63%)
+
+Exemplos de erros:
+
+                                                   texto      real     predito
+4581   solicito relacao nominal de todos os servidore...   private  government
+8936   prezados diante do decreto que no seu art o fi...   private  government
+12230  ola boa tarde gostaria de receber em minha res...  academic  government
+12264  trabalho no departamento fiscal de uma empresa...  academic     private
+6146   prezados gostaria de saber quais os motivos qu...  academic  government
+
+
+# Execução 2 - Com remoção de palavras
+--- Baseline ---
+Acurácia: 0.43
+
+Acurácia (dados de teste - 30%): 0.7008
+
+Relatório por classe:
+              precision    recall  f1-score   support
+
+    academic     0.7091    0.6932    0.7011      4378
+  government     0.7591    0.7381    0.7484      5635
+     private     0.5946    0.6435    0.6181      3091
+
+    accuracy                         0.7008     13104
+   macro avg     0.6876    0.6916    0.6892     13104
+weighted avg     0.7036    0.7008    0.7019     13104
+
+
+========== ANÁLISE E INTERPRETAÇÃO DO MODELO ==========
+
+--- Interpretação Global: características mais importantes por classe ---
+        target            feature    weight
+0     academic          professor  5.546823
+1     academic           pesquisa  4.562551
+2     academic          estudante  3.951879
+3     academic              dados  3.912448
+4     academic              entre  3.576648
+20  government     redistribuicao  6.644084
+21  government           servidor  5.253494
+22  government         servidores  5.033602
+23  government           solicito  4.337855
+24  government  solicito informar  3.642323
+40     private            empresa  3.852405
+41     private             de uso  3.120013
+42     private               onde  3.118165
+43     private                oab  3.034959
+44     private            produto  3.033072
+
+--- Interpretação Local (exemplo individual) ---
+Texto de exemplo: trata este pedido de informacoes sobre o projeto territorios do axe anexo de estudo sobre as religioes de matriz africana bem como mapeamento das casas que as praticam por toda a regiao da grande florianopolis conforme site tendo em vista que ainda nao estao no portal da fapeu os relatorios parciais de execucao financeira e execucao tecnica do primeiro semestre de conforme gostaria que me fossem enviadas copias digitalizadas da documentacao relativa a o processo que contem o projeto original da ufsc chamado territorios do axe o processo de contratacao da fapeu pela ufsc para execucao desse projeto inclusive copias digitalizadas dos documentos de execucao notas fiscais faturas extratos etc que ainda estejam na fapeu e por algum motivo ainda nao tenham sido enviados a ufsc para publicacao em tempo real como determina a legislacao de transparencia aguardo resposta att
+Classe verdadeira: government | Classe predita: government
+
+Palavras com maior influência nesta predição:
+     target        feature    weight     value
+0  academic        projeto  0.174058  0.085399
+1  academic    territorios  0.137495  0.125586
+2  academic      regiao da  0.110320  0.074173
+3  academic       execucao  0.084490  0.115894
+4  academic     mapeamento  0.076486  0.065599
+5  academic     relatorios  0.074088  0.050690
+6  academic  legislacao de  0.070712  0.077967
+7  academic            att  0.068488  0.037807
+8  academic          ainda  0.064100  0.077880
+9  academic       estao no  0.063864  0.072211
+
+--- Análise de Erros ---
+Total de erros: 3921 de 13104 (29.92%)
+
+Exemplos de erros:
+
+                                                   texto      real     predito
+2548   bom dia por exemplo o estrangeiro que e portad...  academic  government
+4063   fui aprovado no concurso na primeira colocacao...   private    academic
+12524  relacao dos processos relativos a atos de conc...  academic     private
+11703  a fim de anexar em solicitacao protocolada na ...   private    academic
+5768   tenho anos sou dependente do plano de saude cu...  academic     private
