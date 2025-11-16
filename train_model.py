@@ -123,6 +123,18 @@ def analyze_model(model, vectorizer, X_test_text, y_test, y_pred):
     else:
         print("✅ Nenhum erro encontrado.")
 
+def run_test_end(path, model, vectorizer):
+    df = read_csv(path)
+    X_test_text = df['req_text'].values
+    X_test_vec = vectorizer.transform(X_test_text)
+
+    y_pred = model.predict(X_test_vec)
+    df_result = pd.DataFrame({
+        'profession': y_pred
+    })
+    df_result.to_csv(f'results_profession.csv', index=False, encoding='utf-8')
+    print(f'Test end OK - {path}')
+
 # --- Execução principal ---
 if __name__ == "__main__":
     df = read_csv('data.csv')
@@ -130,3 +142,4 @@ if __name__ == "__main__":
 
     model, vectorizer, X_test_text, y_test, y_pred = logistic_regression_train(df)
     analyze_model(model, vectorizer, X_test_text, y_test, y_pred)
+    run_test_end('profession-no-labels.csv', model, vectorizer)
